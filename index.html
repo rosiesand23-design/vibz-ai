@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>Vibz AI Entertainment</title>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png"/>
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png"/>
+<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+<meta name="theme-color" content="#1a5c2a"/>
+<meta property="og:title" content="Vibz AI Entertainment"/>
+<meta property="og:description" content="Stream millions of tracks from independent artists. Discover, vibe, and support the artists shaping tomorrow's sound."/>
+<meta property="og:image" content="https://www.vibzentertainment.com/og-image.jpg"/>
+<meta property="og:url" content="https://www.vibzentertainment.com"/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.vibzentertainment.com/og-image.jpg"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#ffffff;--sidebar:#f5f5f5;--card:#eeeeee;--card2:#e5e5e5;
+  --text:#111111;--green:#16a34a;--red:#dc2626;--red-dark:#b91c1c;
+  --muted:rgba(0,0,0,0.45);--border:rgba(0,0,0,0.08);
+  --font:'Inter','Helvetica Neue',Arial,sans-serif;
+  --player-h:72px;--mob-nav-h:60px;--sidebar-w:240px;
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  font-family:var(--font);background:var(--bg);color:var(--text);
+  -webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;
+}
+
+/* ═══════════════════════════════════════
+   SHARED COMPONENT STYLES
+═══════════════════════════════════════ */
+.coming-soon-bar{background:var(--red-dark);color:#fff;text-align:center;padding:9px 16px;font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;}
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(255,255,255,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.topbar-nav{display:flex;gap:8px;}
+.nav-arrow{width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,0.06);border:none;color:var(--text);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.topbar-right{display:flex;align-items:center;gap:8px;}
+.topbar-btn{padding:7px 16px;border-radius:100px;border:none;font-size:0.8rem;font-weight:700;cursor:pointer;touch-action:manipulation;}
+.topbar-btn.outline{background:transparent;color:var(--text);border:1.5px solid rgba(0,0,0,0.2);}
+.topbar-btn.filled{background:var(--text);color:#fff;}
+.topbar-btn.filled:hover{background:var(--green);}
+
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.sec-title{font-size:1.1rem;font-weight:800;color:var(--text);}
+.sec-more{font-size:0.72rem;font-weight:700;color:var(--muted);text-decoration:none;text-transform:uppercase;letter-spacing:0.06em;}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:100px;font-size:0.875rem;font-weight:700;text-decoration:none;cursor:pointer;border:none;transition:all 0.2s;min-height:44px;touch-action:manipulation;}
+.btn-green{background:var(--green);color:#000;}
+.btn-outline{background:transparent;color:var(--text);border:1.5px solid rgba(0,0,0,0.2);}
+.pill{font-size:0.75rem;font-weight:700;padding:6px 14px;border-radius:100px;cursor:pointer;border:none;touch-action:manipulation;}
+.pill-active{background:var(--green);color:#000;}
+.pill-inactive{background:rgba(0,0,0,0.07);color:var(--text);}
+
+/* hero */
+.hero-banner{border-radius:14px;background:linear-gradient(135deg,#fee2e2 0%,#f0fdf4 100%);padding:28px 20px;margin-bottom:28px;position:relative;overflow:hidden;}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(134,239,172,0.2);color:var(--green);font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:5px 12px;border-radius:100px;margin-bottom:14px;}
+.hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(1.5);}}
+.hero-title{font-size:1.7rem;font-weight:900;line-height:1.15;letter-spacing:-0.5px;margin-bottom:10px;color:var(--text);}
+.hero-title span{color:var(--green);}
+.hero-sub{font-size:0.9rem;color:var(--muted);line-height:1.6;margin-bottom:20px;}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;}
+.hero-stats{display:none;}
+
+/* track list */
+.track-list{margin-bottom:32px;}
+.track-row{display:grid;grid-template-columns:28px 44px 1fr 36px;align-items:center;gap:10px;padding:9px 8px;border-radius:8px;cursor:pointer;transition:background 0.15s;touch-action:manipulation;}
+.track-row:active{background:rgba(0,0,0,0.04);}
+.track-num{font-size:0.82rem;color:var(--muted);text-align:center;font-weight:600;}
+.track-art2{width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+.track-name{font-size:0.875rem;font-weight:600;color:var(--text);}
+.track-artist{font-size:0.72rem;color:var(--muted);}
+.track-plays,.track-dur{display:none;}
+.track-heart{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.1rem;padding:4px;touch-action:manipulation;}
+.track-heart.liked{color:var(--green);}
+
+/* cards */
+.cards-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:32px;}
+.card{background:var(--card);border-radius:12px;padding:12px;cursor:pointer;touch-action:manipulation;}
+.card:active{background:var(--card2);}
+.card-art{width:100%;aspect-ratio:1;border-radius:8px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;font-size:2rem;position:relative;overflow:hidden;}
+.card-play{position:absolute;bottom:6px;right:6px;width:36px;height:36px;border-radius:50%;background:var(--green);color:#000;border:none;font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;}
+.card:active .card-play{opacity:1;}
+.card-name{font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.card-sub{font-size:0.7rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.badge{display:inline-block;font-size:0.62rem;font-weight:700;padding:2px 8px;border-radius:100px;margin-top:5px;}
+.badge-ind{background:rgba(134,239,172,0.2);color:var(--green);}
+.badge-mgd{background:rgba(248,113,113,0.15);color:var(--red);}
+
+/* feature strips */
+.feature-strip{border-radius:14px;padding:24px 18px;margin-bottom:24px;display:flex;flex-direction:column;gap:24px;}
+.feature-strip.dark{background:var(--card);}
+.feature-strip.green-tint{background:linear-gradient(135deg,#f0fdf4,#f5f5f5);}
+.feature-label{font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);margin-bottom:8px;}
+.feature-title{font-size:1.3rem;font-weight:900;color:var(--text);letter-spacing:-0.3px;margin-bottom:8px;line-height:1.2;}
+.feature-title span{color:var(--green);}
+.feature-desc{font-size:0.85rem;color:var(--muted);line-height:1.65;margin-bottom:18px;}
+.feature-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
+.feature-item{display:flex;align-items:flex-start;gap:10px;font-size:0.82rem;color:var(--text);line-height:1.5;}
+.feature-icon{width:30px;height:30px;border-radius:7px;background:rgba(134,239,172,0.12);display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;}
+
+/* mockups */
+.mockup{background:#fff;border-radius:14px;padding:18px;border:1px solid var(--border);}
+.mockup-label{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.mockup-track{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,0.03);border-radius:9px;padding:10px;margin-bottom:8px;}
+.mockup-thumb{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;}
+.mockup-name{font-size:0.78rem;font-weight:600;color:var(--text);}
+.mockup-sub{font-size:0.68rem;color:var(--muted);}
+.mockup-loaded{font-size:0.68rem;color:var(--green);font-weight:700;margin-left:auto;}
+.stem-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.stem-label{font-size:0.7rem;color:var(--text);width:48px;}
+.stem-bar{flex:1;height:5px;background:rgba(0,0,0,0.06);border-radius:3px;overflow:hidden;}
+.stem-fill{height:100%;background:var(--green);border-radius:3px;}
+.stem-pct{font-size:0.65rem;color:var(--muted);width:26px;text-align:right;}
+.genre-pills{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0;}
+.mockup-btn{width:100%;padding:10px;border-radius:100px;background:var(--green);color:#000;font-weight:700;font-size:0.8rem;border:none;cursor:pointer;margin-top:4px;touch-action:manipulation;}
+.video-preview{aspect-ratio:16/9;border-radius:9px;background:linear-gradient(135deg,#1a0000,#0a1a0a);margin-bottom:10px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.video-preview::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,0.015) 0,rgba(255,255,255,0.015) 1px,transparent 1px,transparent 20px);}
+.play-circle{width:46px;height:46px;border-radius:50%;background:rgba(248,113,113,0.85);display:flex;align-items:center;justify-content:center;font-size:1.2rem;z-index:1;}
+.timeline-bar{height:14px;border-radius:4px;margin-bottom:5px;overflow:hidden;background:rgba(248,113,113,0.2);position:relative;}
+.timeline-fill{position:absolute;left:0;top:0;height:100%;width:40%;background:var(--red);}
+.prompt-box{background:rgba(0,0,0,0.03);border:1px solid rgba(0,0,0,0.06);border-radius:7px;padding:9px 11px;font-size:0.74rem;color:var(--muted);font-style:italic;margin-bottom:8px;}
+.channel-banner{height:70px;border-radius:10px 10px 0 0;background:linear-gradient(135deg,var(--red-dark),#7f1d1d);position:relative;margin:-18px -18px 0;}
+.channel-live{position:absolute;top:10px;right:12px;background:rgba(0,0,0,0.5);color:#fff;font-size:0.6rem;font-weight:700;padding:3px 9px;border-radius:100px;}
+.channel-info{display:flex;align-items:flex-end;justify-content:space-between;margin:-18px 0 10px;}
+.channel-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--red-dark));display:flex;align-items:center;justify-content:center;font-size:1.2rem;border:3px solid #fff;}
+.follow-btn{padding:6px 14px;border-radius:100px;background:var(--green);color:#000;font-size:0.72rem;font-weight:700;border:none;cursor:pointer;}
+.channel-name{font-size:0.9rem;font-weight:800;color:var(--text);margin-bottom:2px;}
+.channel-meta{font-size:0.68rem;color:var(--muted);margin-bottom:10px;}
+.channel-track{display:flex;align-items:center;gap:9px;background:rgba(0,0,0,0.03);border-radius:7px;padding:8px 10px;margin-bottom:5px;}
+.channel-track-art{width:28px;height:28px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0;}
+.channel-track-name{font-size:0.77rem;font-weight:600;color:var(--text);flex:1;}
+.channel-track-plays{font-size:0.67rem;color:var(--muted);}
+.channel-play{color:var(--green);font-size:0.85rem;background:none;border:none;cursor:pointer;}
+
+/* join form */
+.join-section{border-radius:14px;background:var(--card);padding:24px 18px;margin-bottom:24px;display:flex;flex-direction:column;gap:24px;}
+.form-box{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;}
+.form-title{font-size:0.95rem;font-weight:700;color:var(--text);margin-bottom:16px;}
+.form-group{margin-bottom:12px;}
+.form-group label{display:block;font-size:0.72rem;color:var(--muted);font-weight:600;margin-bottom:5px;}
+.form-group input,.form-group select{width:100%;padding:12px 14px;background:#f9f9f9;border:1px solid rgba(0,0,0,0.1);border-radius:8px;color:var(--text);font-size:16px;font-family:var(--font);outline:none;-webkit-appearance:none;appearance:none;}
+.form-group input:focus,.form-group select:focus{border-color:var(--green);}
+.form-group input::placeholder{color:rgba(0,0,0,0.3);}
+.form-submit{width:100%;padding:13px;border-radius:100px;background:var(--green);color:#000;font-size:0.9rem;font-weight:700;border:none;cursor:pointer;margin-top:4px;touch-action:manipulation;}
+
+/* footer */
+.footer{border-top:1px solid var(--border);padding:28px 16px 20px;margin-top:8px;text-align:center;}
+.footer-logo{font-size:0.9rem;font-weight:900;color:var(--text);margin-bottom:14px;}
+.footer-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:14px;}
+.footer-links a{font-size:0.75rem;color:var(--muted);text-decoration:none;}
+.footer-copy{font-size:0.82rem;font-weight:700;color:var(--text);margin-top:10px;}
+
+/* player */
+.player-track{display:flex;align-items:center;gap:10px;min-width:0;}
+.player-art{width:44px;height:44px;border-radius:7px;background:linear-gradient(135deg,var(--red-dark),#f87171);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.player-name{font-size:0.82rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.player-artist{font-size:0.68rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.player-heart{background:none;border:none;font-size:1rem;color:var(--green);cursor:pointer;margin-left:6px;flex-shrink:0;}
+.player-controls{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;}
+.player-btns{display:flex;align-items:center;gap:12px;}
+.p-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.95rem;touch-action:manipulation;padding:4px;}
+.p-play{width:38px;height:38px;border-radius:50%;background:var(--text);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.95rem;border:none;cursor:pointer;touch-action:manipulation;flex-shrink:0;}
+.p-play:active{background:var(--green);color:#000;}
+.player-progress{display:flex;align-items:center;gap:8px;width:100%;}
+.p-time{font-size:0.62rem;color:var(--muted);width:28px;flex-shrink:0;}
+.p-time.right{text-align:right;}
+.progress-track{flex:1;height:4px;background:rgba(0,0,0,0.1);border-radius:2px;cursor:pointer;position:relative;}
+.progress-fill{height:100%;width:38%;background:var(--text);border-radius:2px;}
+.progress-track:active .progress-fill{background:var(--green);}
+.player-right{display:none;}
+
+/* sidebar (desktop only) */
+#sidebar{display:none;}
+.logo{display:flex;align-items:center;gap:10px;padding:8px 20px 20px;font-size:1.1rem;font-weight:900;color:var(--text);text-decoration:none;}
+.logo-dot{width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0;}
+.nav-section{padding:0 8px;margin-bottom:8px;}
+.nav-label{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);padding:8px 12px 6px;}
+.nav-item{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:8px;font-size:0.85rem;font-weight:600;color:var(--muted);cursor:pointer;text-decoration:none;user-select:none;}
+.nav-item:hover,.nav-item.active{background:rgba(134,239,172,0.1);color:var(--green);}
+.nav-item .icon{font-size:1rem;width:20px;text-align:center;}
+.nav-divider{height:1px;background:var(--border);margin:8px 20px;}
+.sidebar-playlists{padding:0 8px;flex:1;}
+.playlist-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;cursor:pointer;}
+.playlist-item:hover{background:rgba(0,0,0,0.04);}
+.playlist-thumb{width:36px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;}
+.playlist-name{font-size:0.8rem;font-weight:600;color:var(--text);}
+.playlist-sub{font-size:0.68rem;color:var(--muted);}
+
+/* mobile nav */
+#mobile-nav{
+  position:fixed;bottom:0;left:0;right:0;
+  height:calc(var(--mob-nav-h) + env(safe-area-inset-bottom,0px));
+  background:var(--sidebar);border-top:1px solid var(--border);
+  display:flex;align-items:flex-start;justify-content:space-around;
+  padding:6px 4px 0;padding-bottom:env(safe-area-inset-bottom,0px);
+  z-index:100;-webkit-transform:translateZ(0);transform:translateZ(0);
+}
+.mob-nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:0.58rem;font-weight:600;color:var(--muted);padding:4px 8px;border-radius:8px;text-decoration:none;touch-action:manipulation;min-width:48px;}
+.mob-nav-item .mob-icon{font-size:1.3rem;}
+.mob-nav-item.active{color:var(--green);}
+
+/* main + player fixed */
+#main{
+  display:block;width:100%;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:calc(var(--player-h) + var(--mob-nav-h) + env(safe-area-inset-bottom,20px) + 16px);
+}
+#player{
+  position:fixed;
+  bottom:calc(var(--mob-nav-h) + env(safe-area-inset-bottom,0px));
+  left:0;right:0;height:var(--player-h);
+  background:#f5f5f5;border-top:1px solid var(--border);
+  display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;padding:0 14px;gap:8px;
+  z-index:99;-webkit-transform:translateZ(0);transform:translateZ(0);
+}
+
+/* content spacing */
+.content{padding:16px 14px 20px;}
+
+/* scrollbar */
+#main::-webkit-scrollbar{width:4px;}
+#main::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.08);border-radius:2px;}
+
+/* ═══════════════════════════════════════
+   DESKTOP OVERRIDES (769px+)
+═══════════════════════════════════════ */
+@media(min-width:769px){
+  body{display:grid;grid-template-rows:1fr var(--player-h);grid-template-columns:var(--sidebar-w) 1fr;height:100vh;overflow:hidden;}
+  #sidebar{display:flex;flex-direction:column;grid-row:1;grid-column:1;padding:16px 0;overflow-y:auto;border-right:1px solid var(--border);background:var(--sidebar);}
+  #main{grid-row:1;grid-column:2;overflow-y:auto;padding-bottom:0;}
+  #player{position:static;grid-row:2;grid-column:1/3;height:auto;padding:0 24px;grid-template-columns:1fr 2fr 1fr;gap:0;background:#f0f0f0;}
+  #mobile-nav{display:none;}
+  .player-right{display:flex;align-items:center;gap:12px;justify-content:flex-end;}
+  .p-vol-icon{font-size:1rem;color:var(--muted);}
+  .vol-bar{width:80px;height:4px;background:rgba(0,0,0,0.08);border-radius:2px;}
+  .vol-fill{height:100%;width:65%;background:var(--text);border-radius:2px;}
+  .topbar{padding:16px 32px;}
+  .content{padding:24px 32px 40px;}
+  .hero-banner{padding:48px;flex-direction:row;align-items:center;justify-content:space-between;display:flex;margin-bottom:40px;}
+  .hero-title{font-size:clamp(1.8rem,3.5vw,2.8rem);}
+  .hero-sub{max-width:480px;}
+  .hero-stats{display:flex;gap:20px;flex-shrink:0;}
+  .stat-box{text-align:center;background:rgba(0,0,0,0.04);border:1px solid var(--border);border-radius:12px;padding:18px 22px;}
+  .stat-val{font-size:1.5rem;font-weight:900;color:var(--green);}
+  .stat-lbl{font-size:0.68rem;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:0.05em;}
+  .sec-title{font-size:1.25rem;}
+  .cards-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px;margin-bottom:48px;}
+  .card{padding:16px;}
+  .card-art{font-size:2.2rem;margin-bottom:14px;}
+  .card-name{font-size:0.875rem;}
+  .track-row{grid-template-columns:32px 48px 1fr auto auto 36px;gap:16px;padding:10px 16px;}
+  .track-art2{width:48px;height:48px;}
+  .track-plays,.track-dur{display:block;}
+  .track-plays{font-size:0.78rem;color:var(--muted);text-align:right;}
+  .track-dur{font-size:0.78rem;color:var(--muted);text-align:right;width:36px;}
+  .feature-strip{flex-direction:row;padding:40px;gap:48px;align-items:center;margin-bottom:32px;}
+  .feature-strip > *{flex:1;}
+  .feature-title{font-size:1.6rem;}
+  .join-section{flex-direction:row;padding:40px;gap:48px;margin-bottom:32px;}
+  .join-section > *{flex:1;}
+  .player-track{gap:14px;}
+  .player-art{width:52px;height:52px;}
+  .player-name{font-size:0.85rem;}
+  .player-controls{gap:8px;}
+  .player-btns{gap:16px;}
+  .p-btn{font-size:1rem;}
+  .p-play{width:40px;height:40px;}
+  .footer{padding:32px 0 24px;}
+}
+</style>
+</head>
+<body>
+
+<nav id="sidebar">
+  <a href="#" class="logo"><span class="logo-dot"></span>Vibz AI</a>
+  <div class="nav-section">
+    <div class="nav-item active" onclick="setActive(this)"><span class="icon">🏠</span>Home</div>
+    <div class="nav-item" onclick="setActive(this)"><span class="icon">🔍</span>Search</div>
+  </div>
+  <div class="nav-divider"></div>
+  <div class="nav-section">
+    <div class="nav-label">Discover</div>
+    <a href="#trending" class="nav-item" onclick="setActive(this)"><span class="icon">🔥</span>Trending Now</a>
+    <a href="#artists" class="nav-item" onclick="setActive(this)"><span class="icon">🎤</span>Artists</a>
+    <a href="#channels" class="nav-item" onclick="setActive(this)"><span class="icon">📺</span>Channels</a>
+  </div>
+  <div class="nav-divider"></div>
+  <div class="nav-section">
+    <div class="nav-label">AI Tools</div>
+    <a href="#video" class="nav-item" onclick="setActive(this)"><span class="icon">🎬</span>AI Video Editor</a>
+    <a href="#remix" class="nav-item" onclick="setActive(this)"><span class="icon">🎛</span>AI Remix Studio</a>
+  </div>
+  <div class="nav-divider"></div>
+  <div class="nav-section">
+    <div class="nav-label">For Artists</div>
+    <a href="#join" class="nav-item" onclick="setActive(this)"><span class="icon">➕</span>Join as Artist</a>
+    <div class="nav-item" onclick="setActive(this)"><span class="icon">⬆️</span>Upload Music</div>
+    <div class="nav-item" onclick="setActive(this)"><span class="icon">📊</span>Analytics</div>
+  </div>
+  <div class="nav-divider"></div>
+  <div class="sidebar-playlists">
+    <div class="nav-label">Your Library</div>
+    <div class="playlist-item"><div class="playlist-thumb" style="background:linear-gradient(135deg,#dc2626,#f87171)">❤️</div><div><div class="playlist-name">Liked Songs</div><div class="playlist-sub">24 songs</div></div></div>
+    <div class="playlist-item"><div class="playlist-thumb" style="background:linear-gradient(135deg,#059669,#86efac)">🎵</div><div><div class="playlist-name">Late Night Vibes</div><div class="playlist-sub">18 songs</div></div></div>
+    <div class="playlist-item"><div class="playlist-thumb" style="background:linear-gradient(135deg,#7c3aed,#a78bfa)">🔥</div><div><div class="playlist-name">Workout Mix</div><div class="playlist-sub">32 songs</div></div></div>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="coming-soon-bar">🎵 Coming Soon — Vibz AI Entertainment</div>
+  <div class="topbar">
+    <div class="topbar-nav">
+      <button class="nav-arrow">◀</button>
+      <button class="nav-arrow">▶</button>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-btn outline">Log In</button>
+      <button class="topbar-btn filled">Sign Up Free</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- HERO -->
+    <div class="hero-banner">
+      <div style="position:relative;z-index:1;">
+        <div class="hero-tag">AI-Powered Music Platform</div>
+        <h1 class="hero-title">Music that moves you —<br><span>your way.</span></h1>
+        <p class="hero-sub">Stream millions of tracks from independent artists and world-class managed acts. Discover, vibe, and support the artists shaping tomorrow's sound.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-green">▶ Start Listening Free</a>
+          <a href="#join" class="btn btn-outline">Join as Artist</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-box"><div class="stat-val">50K+</div><div class="stat-lbl">Artists</div></div>
+        <div class="stat-box"><div class="stat-val">2M+</div><div class="stat-lbl">Tracks</div></div>
+        <div class="stat-box"><div class="stat-val">85%</div><div class="stat-lbl">Royalties</div></div>
+      </div>
+    </div>
+
+    <!-- TRENDING -->
+    <div id="trending"><div class="sec-header"><div class="sec-title">🔥 Trending Now</div><a href="#" class="sec-more">See all</a></div><div class="track-list" id="trackList"></div></div>
+
+    <!-- FEATURED ARTISTS -->
+    <div id="artists">
+      <div class="sec-header"><div class="sec-title">Featured Artists</div><a href="#" class="sec-more">See all</a></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;" id="filterBtns">
+        <button class="pill pill-active" onclick="filterArtists('all',this)">All</button>
+        <button class="pill pill-inactive" onclick="filterArtists('independent',this)">Independent</button>
+        <button class="pill pill-inactive" onclick="filterArtists('managed',this)">Managed</button>
+      </div>
+      <div class="cards-grid" id="artistGrid"></div>
+    </div>
+
+    <!-- ARTIST CHANNELS -->
+    <div id="channels">
+      <div class="sec-header"><div class="sec-title">📺 Artist Channels</div><a href="#" class="sec-more">Browse all</a></div>
+      <div class="feature-strip dark">
+        <div>
+          <div class="feature-label">Your Own Space</div>
+          <h2 class="feature-title">Every Artist Gets <span>Their Own Channel</span></h2>
+          <p class="feature-desc">A fully branded home for your music, videos, and fans — every artist on Vibz AI gets a dedicated channel page.</p>
+          <div class="feature-list">
+            <div class="feature-item"><div class="feature-icon">🏠</div><span>Custom banner, bio, discography, and video gallery.</span></div>
+            <div class="feature-item"><div class="feature-icon">👥</div><span>Fans can follow, get notified of new releases, and interact.</span></div>
+            <div class="feature-item"><div class="feature-icon">📈</div><span>Real-time analytics — streams, fans, location, and growth.</span></div>
+            <div class="feature-item"><div class="feature-icon">📺</div><span>Upload tracks, music videos, and AI-generated content.</span></div>
+          </div>
+          <a href="#join" class="btn btn-green">Claim Your Channel →</a>
+        </div>
+        <div class="mockup">
+          <div class="channel-banner"><div class="channel-live">● LIVE</div></div>
+          <div class="channel-info"><div class="channel-avatar">🎧</div><button class="follow-btn">+ Follow</button></div>
+          <div class="channel-name">Nova Rae</div>
+          <div class="channel-meta">Electronic · 18K Fans · 12 Tracks</div>
+          <div class="channel-track"><div class="channel-track-art" style="background:rgba(220,38,38,0.2)">🎵</div><div style="flex:1"><div class="channel-track-name">Midnight Signal</div><div class="channel-track-plays">2.4M plays</div></div><button class="channel-play">▶</button></div>
+          <div class="channel-track"><div class="channel-track-art" style="background:rgba(134,239,172,0.15)">🎵</div><div style="flex:1"><div class="channel-track-name">Neon Drift</div><div class="channel-track-plays">890K plays</div></div><button class="channel-play">▶</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI VIDEO -->
+    <div id="video">
+      <div class="sec-header"><div class="sec-title">🎬 AI Video Editor</div></div>
+      <div class="feature-strip green-tint">
+        <div class="mockup">
+          <div class="mockup-label">▶ AI Video Editor</div>
+          <div class="video-preview"><div class="play-circle">▶</div></div>
+          <div class="mockup-label" style="margin-top:10px">TIMELINE</div>
+          <div class="timeline-bar"><div class="timeline-fill"></div></div>
+          <div style="height:7px;background:rgba(0,0,0,0.04);border-radius:3px;width:75%;margin-bottom:5px"></div>
+          <div style="height:7px;background:rgba(0,0,0,0.03);border-radius:3px;width:90%;margin-bottom:12px"></div>
+          <div class="mockup-label">AI PROMPT</div>
+          <div class="prompt-box">"Cinematic night city drive, neon lights, matching the beat drops..."</div>
+          <button class="mockup-btn">✨ Generate Video</button>
+        </div>
+        <div>
+          <div class="feature-label">New Feature</div>
+          <h2 class="feature-title">Create Music Videos <span>with AI</span></h2>
+          <p class="feature-desc">No editing experience needed. Add your tracks to any video or let AI generate a full music video from a text prompt.</p>
+          <div class="feature-list">
+            <div class="feature-item"><div class="feature-icon">🎬</div><span>Upload footage and sync it to any track. Auto-beat matching included.</span></div>
+            <div class="feature-item"><div class="feature-icon">🤖</div><span>Describe your vision — AI generates scenes, visuals, and effects.</span></div>
+            <div class="feature-item"><div class="feature-icon">✂️</div><span>Trim, cut, add effects with drag-and-drop tools.</span></div>
+            <div class="feature-item"><div class="feature-icon">🚀</div><span>Publish to YouTube, Instagram, and TikTok in one click.</span></div>
+          </div>
+          <a href="#join" class="btn btn-green">Get Early Access →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI REMIX -->
+    <div id="remix">
+      <div class="sec-header"><div class="sec-title">🎛 AI Remix Studio</div></div>
+      <div class="feature-strip dark">
+        <div>
+          <div class="feature-label">AI Music Tools</div>
+          <h2 class="feature-title">Edit & Remix <span>Any Song with AI</span></h2>
+          <p class="feature-desc">Transform any song into something entirely your own — no studio, no producer, no DAW required.</p>
+          <div class="feature-list">
+            <div class="feature-item"><div class="feature-icon">🎚</div><span>Stem Separation — isolate vocals, drums, bass, and melody.</span></div>
+            <div class="feature-item"><div class="feature-icon">🔀</div><span>Genre Remix — flip any song into lo-fi, drill, Afrobeats, jazz.</span></div>
+            <div class="feature-item"><div class="feature-icon">🎤</div><span>Vocal Styler — pitch-shift and add AI voice effects instantly.</span></div>
+            <div class="feature-item"><div class="feature-icon">💾</div><span>Save or send to the original artist for a collab credit.</span></div>
+          </div>
+          <a href="#join" class="btn btn-green">Get Early Access →</a>
+        </div>
+        <div class="mockup">
+          <div class="mockup-label">🎛 AI Remix Studio</div>
+          <div class="mockup-track"><div class="mockup-thumb" style="background:linear-gradient(135deg,#dc2626,#f87171)">🎵</div><div><div class="mockup-name">Midnight Signal</div><div class="mockup-sub">Nova Rae · Original</div></div><div class="mockup-loaded">LOADED</div></div>
+          <div class="mockup-label">STEMS</div>
+          <div class="stem-row"><div class="stem-label">Vocals</div><div class="stem-bar"><div class="stem-fill" style="width:80%"></div></div><div class="stem-pct">80%</div></div>
+          <div class="stem-row"><div class="stem-label">Drums</div><div class="stem-bar"><div class="stem-fill" style="width:60%"></div></div><div class="stem-pct">60%</div></div>
+          <div class="stem-row"><div class="stem-label">Bass</div><div class="stem-bar"><div class="stem-fill" style="width:90%"></div></div><div class="stem-pct">90%</div></div>
+          <div class="stem-row"><div class="stem-label">Melody</div><div class="stem-bar"><div class="stem-fill" style="width:45%"></div></div><div class="stem-pct">45%</div></div>
+          <div class="mockup-label" style="margin-top:6px">REMIX STYLE</div>
+          <div class="genre-pills"><span class="pill pill-active">Afrobeats</span><span class="pill pill-inactive">Lo-fi</span><span class="pill pill-inactive">Drill</span><span class="pill pill-inactive">Jazz</span></div>
+          <button class="mockup-btn">🎛 Generate Remix</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- JOIN -->
+    <div id="join">
+      <div class="sec-header"><div class="sec-title">🎤 Join as an Artist</div></div>
+      <div class="join-section">
+        <div>
+          <div class="feature-label">For Artists</div>
+          <h2 class="feature-title">Your Music. <span>Your Terms.</span></h2>
+          <p class="feature-desc">Whether you're a bedroom producer or signed to a label, Vibz AI gets your music heard.</p>
+          <div class="feature-list">
+            <div class="feature-item"><div class="feature-icon">🎤</div><span>Upload unlimited tracks and albums — no gatekeeping.</span></div>
+            <div class="feature-item"><div class="feature-icon">📺</div><span>Your own branded artist channel with fans and analytics.</span></div>
+            <div class="feature-item"><div class="feature-icon">📊</div><span>Real-time analytics — streams, fans, earnings in one dashboard.</span></div>
+            <div class="feature-item"><div class="feature-icon">💸</div><span>Keep 85% of your royalties. Always transparent payouts.</span></div>
+          </div>
+        </div>
+        <div class="form-box">
+          <div class="form-title">Create Your Artist Profile</div>
+          <div class="form-group"><label>Artist Name</label><input type="text" placeholder="Your stage name"/></div>
+          <div class="form-group"><label>Email Address</label><input type="email" placeholder="you@email.com"/></div>
+          <div class="form-group"><label>Genre</label><select><option value="">Select your primary genre</option><option>Hip-Hop / Rap</option><option>R&B / Soul</option><option>Electronic / EDM</option><option>Pop</option><option>Afrobeats</option><option>Rock / Alternative</option><option>Jazz / Blues</option><option>Other</option></select></div>
+          <div class="form-group"><label>Artist Type</label><select><option value="">Independent or managed?</option><option>Independent Artist</option><option>Label / Managed Artist</option></select></div>
+          <button class="form-submit" onclick="this.textContent='✓ Application received!';this.style.background='#059669';setTimeout(()=>{this.textContent='Create My Artist Profile →';this.style.background=''},3000)">Create My Artist Profile →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-logo">⚫ Vibz AI Entertainment</div>
+      <div class="footer-links">
+        <a href="#">Discover</a><a href="#">Artists</a><a href="#">Pricing</a>
+        <a href="#">Blog</a><a href="#">Support</a><a href="#">Privacy</a>
+      </div>
+      <div class="footer-copy">© 2026 Joey Barajas. All rights reserved.</div>
+    </div>
+
+  </div>
+</main>
+
+<div id="player">
+  <div class="player-track">
+    <div class="player-art" id="pArt">🎵</div>
+    <div style="min-width:0">
+      <div class="player-name" id="pName">Midnight Signal</div>
+      <div class="player-artist" id="pArtist">Nova Rae · Electronic</div>
+    </div>
+    <button class="player-heart">♥</button>
+  </div>
+  <div class="player-controls">
+    <div class="player-btns">
+      <button class="p-btn">⏮</button>
+      <button class="p-play" id="mainPlayBtn" onclick="togglePlay()">▶</button>
+      <button class="p-btn">⏭</button>
+    </div>
+    <div class="player-progress">
+      <span class="p-time">1:24</span>
+      <div class="progress-track" onclick="seekTo(event)"><div class="progress-fill" id="pFill"></div></div>
+      <span class="p-time right">3:18</span>
+    </div>
+  </div>
+  <div class="player-right">
+    <span class="p-vol-icon">🔊</span>
+    <div class="vol-bar"><div class="vol-fill"></div></div>
+  </div>
+</div>
+
+<nav id="mobile-nav">
+  <a href="#" class="mob-nav-item active" onclick="setMobActive(this)"><span class="mob-icon">🏠</span>Home</a>
+  <a href="#trending" class="mob-nav-item" onclick="setMobActive(this)"><span class="mob-icon">🔥</span>Trending</a>
+  <a href="#artists" class="mob-nav-item" onclick="setMobActive(this)"><span class="mob-icon">🎤</span>Artists</a>
+  <a href="#video" class="mob-nav-item" onclick="setMobActive(this)"><span class="mob-icon">🎬</span>AI Video</a>
+  <a href="#join" class="mob-nav-item" onclick="setMobActive(this)"><span class="mob-icon">➕</span>Join</a>
+</nav>
+
+<script>
+const artists=[
+  {name:"Nova Rae",genre:"Electronic",type:"independent",emoji:"🎧",color:"#dc2626"},
+  {name:"The Kulture",genre:"Hip-Hop",type:"managed",emoji:"🎤",color:"#d97706"},
+  {name:"Soleil D.",genre:"R&B / Soul",type:"independent",emoji:"🌙",color:"#0891b2"},
+  {name:"Axel Storm",genre:"Rock",type:"managed",emoji:"⚡",color:"#dc2626"},
+  {name:"Mireille",genre:"Afrobeats",type:"independent",emoji:"🌍",color:"#059669"},
+  {name:"DJ Kronos",genre:"EDM",type:"independent",emoji:"🎛️",color:"#b91c1c"},
+  {name:"Lane Grey",genre:"Pop",type:"managed",emoji:"🌟",color:"#ea580c"},
+  {name:"Yara Blue",genre:"Jazz",type:"independent",emoji:"🎷",color:"#1d4ed8"},
+];
+const tracks=[
+  {title:"Midnight Signal",artist:"Nova Rae",plays:"2.4M",duration:"3:18",emoji:"🎧",color:"#dc2626"},
+  {title:"Kingdom Come",artist:"The Kulture",plays:"1.9M",duration:"2:54",emoji:"🎤",color:"#d97706"},
+  {title:"Velvet Hours",artist:"Soleil D.",plays:"1.6M",duration:"4:02",emoji:"🌙",color:"#0891b2"},
+  {title:"Overdrive",artist:"Axel Storm",plays:"1.3M",duration:"3:41",emoji:"⚡",color:"#dc2626"},
+  {title:"Lagos Dreams",artist:"Mireille",plays:"1.1M",duration:"3:55",emoji:"🌍",color:"#059669"},
+  {title:"404 Love",artist:"DJ Kronos",plays:"980K",duration:"5:12",emoji:"🎛️",color:"#b91c1c"},
+  {title:"Golden Hour",artist:"Lane Grey",plays:"854K",duration:"3:28",emoji:"🌟",color:"#ea580c"},
+];
+function renderArtists(filter){
+  const list=filter==='all'?artists:artists.filter(a=>a.type===filter);
+  document.getElementById('artistGrid').innerHTML=list.map(a=>`
+    <div class="card" onclick="loadTrack('${a.name}','${a.emoji}','${a.genre}')">
+      <div class="card-art" style="background:${a.color}22"><span>${a.emoji}</span><button class="card-play">▶</button></div>
+      <div class="card-name">${a.name}</div><div class="card-sub">${a.genre}</div>
+      <span class="badge badge-${a.type==='independent'?'ind':'mgd'}">${a.type==='independent'?'Independent':'Managed'}</span>
+    </div>`).join('');
+}
+function filterArtists(filter,btn){
+  document.querySelectorAll('#filterBtns .pill').forEach(b=>b.className='pill pill-inactive');
+  btn.className='pill pill-active';renderArtists(filter);
+}
+function renderTracks(){
+  document.getElementById('trackList').innerHTML=tracks.map((t,i)=>`
+    <div class="track-row" onclick="loadTrack('${t.title}','${t.emoji}','${t.artist}')">
+      <div class="track-num">${i+1}</div>
+      <div class="track-art2" style="background:${t.color}22">${t.emoji}</div>
+      <div><div class="track-name">${t.title}</div><div class="track-artist">${t.artist}</div></div>
+      <div class="track-plays">${t.plays}</div>
+      <div class="track-dur">${t.duration}</div>
+      <button class="track-heart" onclick="event.stopPropagation();this.classList.toggle('liked')">♥</button>
+    </div>`).join('');
+}
+let playing=false,pInterval=null,pVal=38;
+function loadTrack(name,emoji,artist){
+  document.getElementById('pName').textContent=name;
+  document.getElementById('pArtist').textContent=artist;
+  document.getElementById('pArt').textContent=emoji;
+  playing=true;document.getElementById('mainPlayBtn').textContent='⏸';
+  clearInterval(pInterval);pVal=5;
+  pInterval=setInterval(()=>{pVal=Math.min(pVal+0.2,100);document.getElementById('pFill').style.width=pVal+'%';if(pVal>=100)clearInterval(pInterval);},300);
+}
+function togglePlay(){
+  playing=!playing;document.getElementById('mainPlayBtn').textContent=playing?'⏸':'▶';
+  if(playing){pInterval=setInterval(()=>{pVal=Math.min(pVal+0.2,100);document.getElementById('pFill').style.width=pVal+'%';},300);}
+  else clearInterval(pInterval);
+}
+function seekTo(e){const pct=e.offsetX/e.currentTarget.offsetWidth;pVal=pct*100;document.getElementById('pFill').style.width=pVal+'%';}
+function setActive(el){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));el.classList.add('active');}
+function setMobActive(el){document.querySelectorAll('.mob-nav-item').forEach(n=>n.classList.remove('active'));el.classList.add('active');}
+renderArtists('all');renderTracks();
+</script>
+</body>
+</html>
